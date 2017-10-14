@@ -33,7 +33,7 @@ import re
 
 from honssh import log
 from honssh.config import Config
-
+from telegramos import tg
 
 def get_connection_details(conn_details):
     cfg = Config.getInstance()
@@ -58,6 +58,10 @@ def get_connection_details(conn_details):
                         # Check for fixed password match
                         if conn_details['password'] in passwords:
                             log.msg(log.LYELLOW, '[SPOOF]', 'Fixed password match %s/%s' % (cred[0], conn_details['password']))
+                            #spi
+                            attackerUser= cred[0]
+                            attackerPass= conn_details['password']
+                            tg.tgMessage("[2] Password used: {}/{}".format(attackerUser,attackerPass),2)
                             password = cred[1]
                             break
                     # Check random password chance allowed
@@ -134,7 +138,8 @@ def write_spoof_log(conn_details):
     username = conn_details['username']
     password = conn_details['password']
     ip = conn_details['peer_ip']
-
+    #spi
+    tg.tgMessage("[1] New Attacker from {} ({}/{})".format(ip, username, password),1)
     set_permissions = False
     found = False
 

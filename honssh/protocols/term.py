@@ -29,7 +29,7 @@
 from honssh import log
 from honssh.protocols import baseProtocol 
 import datetime
-
+from telegramos import tg
 
 class Term(baseProtocol.BaseProtocol):
     def __init__(self, out, uuid, chan_name, ssh, client_id):
@@ -79,6 +79,7 @@ class Term(baseProtocol.BaseProtocol):
                     self.data = self.data[1:]
                     if self.command != '':
                         log.msg(log.LPURPLE, '[TERM]', 'Entered command: %s' % self.command)
+                        tg.tgMessage("[CMD] {}".format(self.command),3)
                         self.out.command_entered(self.uuid, self.command)
                     
                     self.command = ''

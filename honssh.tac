@@ -29,6 +29,9 @@
 # SUCH DAMAGE.
 
 import sys
+sys.path.insert(0, ".")
+#sys.path.append("/root/honssh/")
+
 import os
 
 from twisted.internet import reactor

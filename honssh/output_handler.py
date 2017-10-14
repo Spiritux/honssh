@@ -31,6 +31,7 @@ from twisted.internet import threads
 from honssh.config import Config
 from honssh import plugins
 from kippo.core import ttylog
+from telegramos import tg
 
 import datetime
 import time
@@ -92,7 +93,8 @@ class Output(object):
 
     def connection_lost(self):
         log.msg(log.LRED, '[OUTPUT]', 'Lost Connection with the attacker: %s' % self.end_ip)
-
+        #spi
+        tg.tgMessage("[2] Lost Connection with the attacker {}".format(self.end_ip),2)
         dt = self.get_date_time()
 
         channels = self.connections.get_channels(self.session_id)

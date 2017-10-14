@@ -30,7 +30,7 @@ from twisted.conch.ssh import transport
 from twisted.internet import reactor, protocol, defer
 from honssh import log
 from honssh.config import Config
-
+from telegramos import tg
 
 class HonsshClientTransport(transport.SSHClientTransport):
     def __init__(self):
@@ -39,6 +39,8 @@ class HonsshClientTransport(transport.SSHClientTransport):
 
     def connectionMade(self):
         log.msg(log.LGREEN, '[CLIENT]', 'New client connection')
+        #spi
+        tg.tgMessage("[3][CLIENT] - New client connection",3)
         self.out = self.factory.server.out
         self.factory.server.client = self
         self.factory.server.sshParse.set_client(self)
@@ -50,6 +52,8 @@ class HonsshClientTransport(transport.SSHClientTransport):
     def connectionSecure(self):
         self.factory.server.clientConnected = True
         log.msg(log.LGREEN, '[CLIENT]', 'Client Connection Secured')
+        #spi
+        tg.tgMessage("[3][CLIENT] Client connection Secured",3)
 
     def connectionLost(self, reason):
         transport.SSHClientTransport.connectionLost(self, reason)
@@ -58,6 +62,8 @@ class HonsshClientTransport(transport.SSHClientTransport):
             log.msg(log.LBLUE, '[CLIENT]',
                     'Lost connection with the Honeypot: ' + self.factory.server.sensor_name + ' (' + self.factory.server.honey_ip + ':' + str(
                         self.factory.server.honey_port) + ')')
+            #spi
+            tg.tgMessage("[3][CLIENT] Lost connection with the Honeypot: {} ({}:{}) )".format(self.factory.server.sensor_name,self.factory.server.honey_ip, self.factory.server.honey_port), 3) 
         else:
             log.msg(log.LBLUE, '[CLIENT]', 'Lost connection with the Honeypot (Server<->Honeypot not connected)')
 
@@ -109,3 +115,6 @@ class HonsshSlimClientFactory(protocol.ClientFactory):
 
     def clientConnectionLost(self, connector, reason):
         log.msg(log.LGREEN, '[HONSSH]', 'HonSSH Boot Sequence Complete - Ready for attacks!')
+        #spi
+        tg.tgBootMessage(" Boot Sequence Complete - Ready for attacks!",1)
+

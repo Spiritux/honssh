@@ -36,7 +36,7 @@ from honssh import post_auth_handler
 from honssh import pre_auth_handler
 from honssh.config import Config
 from honssh.protocols import ssh
-
+from telegramos import tg
 
 class HonsshServerTransport(honsshServer.HonsshServer):
     def __init__(self):
@@ -133,6 +133,8 @@ class HonsshServerTransport(honsshServer.HonsshServer):
         if not self.clientConnected:
             log.msg(log.LPURPLE, '[SERVER]', 'CONNECTION TO HONEYPOT NOT READY, BUFFERING PACKET')
             stage.delayedPackets.append([message_num, payload])
+            #spi
+            tg.tgMessage("[3][SERVER] Connection to Honey Net NOT REDY, BUFFERING PACKET",3)
         else:
             if not stage.finishedSending:
                 stage.delayedPackets.append([message_num, payload])
@@ -193,6 +195,8 @@ class HonsshServerFactory(factory.SSHFactory):
 
         if self.ourVersionString != '':
             log.msg(log.LGREEN, '[HONSSH]', 'HonSSH Boot Sequence Complete - Ready for attacks!')
+            #spi
+            tg.tgMessage("[3][SERVER] HonSSH Boot Sequence Complete - Ready for attacks!",3)
 
     def buildProtocol(self, addr):
         t = HonsshServerTransport()

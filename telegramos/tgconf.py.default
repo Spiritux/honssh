@@ -1,0 +1,10 @@
+import telegram
+
+#Config file for telegram integration with Honssh
+bot = telegram.Bot("API")
+
+#LOG_LEVEL from 1 to 3 (Value increase the verbosity)
+destinatarios = {'NUMERIC_ID_CHAT_1_VALUE':LOG_LEVEL,'NUMERIC_ID_CHAT_2_VALUE':LOG_LEVEL,........,'NUMERIC_ID_CHAT_N_VALUE':LOG_LEVEL}
+
+#Path to manage the files for telegram inside Honssh
+path_to_folder_files='/Path/to/Folder/where/honssh/is/'
